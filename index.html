@@ -3,1062 +3,225 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Great California Road Trip · May 31 – June 6</title>
+  <title>The Great California Road Trip · May 31 – June 6, 2026</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; background: #0a0a0a; color: #fff; overflow-x: hidden; }
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: #0a0a0a;
-      color: #fff;
-      overflow-x: hidden;
-    }
+    /* ── HERO ── */
+    .hero { position: relative; height: 100vh; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1800&q=85'); background-size: cover; background-position: center 35%; filter: brightness(0.5); }
+    .hero-gradient { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.0) 40%, rgba(0,0,0,0.7) 100%); }
+    .hero-content { position: relative; z-index: 2; padding: 0 24px; }
+    .hero-eyebrow { font-size: 10px; letter-spacing: 7px; text-transform: uppercase; color: #f5c842; margin-bottom: 22px; }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(52px, 9vw, 118px); font-weight: 900; line-height: 0.92; letter-spacing: -3px; }
+    .hero-title em { font-style: italic; color: #f5c842; }
+    .hero-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(20px, 3vw, 34px); font-weight: 300; color: rgba(255,255,255,0.82); margin-top: 18px; margin-bottom: 36px; }
+    .date-pill { display: inline-block; border: 1px solid rgba(245,200,66,0.55); color: #f5c842; font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; padding: 10px 30px; }
 
-    /* ══════════════════════════════
-       HERO
-    ══════════════════════════════ */
-    .hero {
-      position: relative;
-      height: 100vh;
-      min-height: 700px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1800&q=85');
-      background-size: cover;
-      background-position: center 35%;
-      filter: brightness(0.5);
-    }
-    .hero-gradient {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom,
-        rgba(0,0,0,0.05) 0%,
-        rgba(0,0,0,0.0) 40%,
-        rgba(0,0,0,0.7) 100%);
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      padding: 0 24px;
-    }
-    .hero-eyebrow {
-      font-size: 10px;
-      letter-spacing: 7px;
-      text-transform: uppercase;
-      color: #f5c842;
-      margin-bottom: 22px;
-    }
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(52px, 9vw, 118px);
-      font-weight: 900;
-      line-height: 0.92;
-      letter-spacing: -3px;
-    }
-    .hero-title em {
-      font-style: italic;
-      color: #f5c842;
-    }
-    .hero-sub {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(20px, 3vw, 34px);
-      font-weight: 300;
-      color: rgba(255,255,255,0.82);
-      margin-top: 18px;
-      margin-bottom: 36px;
-    }
-    .date-pill {
-      display: inline-block;
-      border: 1px solid rgba(245,200,66,0.55);
-      color: #f5c842;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      padding: 10px 30px;
-    }
+    /* ── ROUTE STRIP ── */
+    .route-strip { background: #f5c842; color: #0a0a0a; display: flex; align-items: stretch; justify-content: center; flex-wrap: wrap; }
+    .route-stop { flex: 1; min-width: 120px; padding: 28px 20px; text-align: center; position: relative; }
+    .route-stop + .route-stop::before { content: '→'; position: absolute; left: -2px; top: 50%; transform: translateY(-50%); font-size: 16px; color: rgba(0,0,0,0.22); }
+    .route-stop .rs-date { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; opacity: 0.5; }
+    .route-stop .rs-city { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 900; }
+    .route-stop .rs-note { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; margin-top: 3px; opacity: 0.55; }
 
-    /* ══════════════════════════════
-       ROUTE STRIP
-    ══════════════════════════════ */
-    .route-strip {
-      background: #f5c842;
-      color: #0a0a0a;
-      padding: 0;
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .route-stop {
-      flex: 1;
-      min-width: 160px;
-      padding: 32px 28px;
-      text-align: center;
-      position: relative;
-    }
-    .route-stop + .route-stop::before {
-      content: '→';
-      position: absolute;
-      left: -2px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 18px;
-      color: rgba(0,0,0,0.25);
-    }
-    .route-stop .date {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      opacity: 0.55;
-    }
-    .route-stop .city {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 900;
-    }
-    .route-stop .nights {
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-top: 4px;
-      opacity: 0.6;
-    }
+    /* ── SCHEDULE SECTION ── */
+    .schedule-section { background: #111; padding: 100px 0 80px; }
+    .schedule-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .schedule-heading { text-align: center; margin-bottom: 64px; }
+    .schedule-heading .eyebrow { font-size: 10px; letter-spacing: 6px; text-transform: uppercase; color: #f5c842; margin-bottom: 14px; }
+    .schedule-heading h2 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 60px); font-weight: 700; }
+    .schedule-heading h2 em { font-style: italic; color: #f5c842; }
 
-    /* ══════════════════════════════
-       CHAPTER HEADER
-    ══════════════════════════════ */
-    .chapter-header {
-      position: relative;
-      height: 65vh;
-      min-height: 450px;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-    }
-    .chapter-bg {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      filter: brightness(0.45);
-      transition: transform 0.6s ease;
-    }
+    /* Flight Cards */
+    .flights-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; margin-bottom: 60px; }
+    .flight-card { background: #1a1a1a; border: 1px solid #2a2a2a; padding: 28px 32px; position: relative; }
+    .flight-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #f5c842; }
+    .flight-type { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: #f5c842; margin-bottom: 6px; }
+    .flight-num { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.3); margin-bottom: 18px; letter-spacing: 1px; }
+    .flight-route { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .flight-city { display: flex; flex-direction: column; gap: 3px; }
+    .flight-city .iata { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; line-height: 1; letter-spacing: -1px; }
+    .flight-city .city-name { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 1px; }
+    .flight-city .time { font-size: 18px; font-weight: 700; color: #f5c842; margin-top: 4px; }
+    .flight-arrow-icon { flex: 1; text-align: center; color: rgba(255,255,255,0.15); font-size: 16px; }
+    .flight-meta { font-size: 10px; letter-spacing: 1px; color: rgba(255,255,255,0.35); margin-bottom: 12px; padding-top: 12px; border-top: 1px solid #2a2a2a; }
+    .flight-seats { display: flex; flex-direction: column; gap: 4px; }
+    .flight-seats span { font-size: 10px; letter-spacing: 1px; color: rgba(255,255,255,0.5); }
+    .flight-warning { margin-top: 12px; padding: 8px 12px; background: rgba(245,100,50,0.1); border: 1px solid rgba(245,100,50,0.3); color: #f57832; font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+    .drive-connector { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; padding: 0 12px; }
+    .drive-connector .dc-icon { font-size: 26px; }
+    .drive-connector .dc-label { font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+    .drive-connector .dc-time { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: #f5c842; }
+    .drive-connector .dc-detail { font-size: 9px; color: rgba(255,255,255,0.3); letter-spacing: 1px; line-height: 1.5; }
+
+    /* Map */
+    .map-wrapper { margin-bottom: 60px; border: 1px solid #2a2a2a; overflow: hidden; }
+    .map-label { background: #1a1a1a; padding: 14px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #2a2a2a; }
+    .map-label span { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: #f5c842; }
+    .map-dot { width: 6px; height: 6px; background: #f5c842; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(1.3); } }
+    #trip-map { height: 420px; width: 100%; }
+    .leaflet-control-attribution { background: rgba(0,0,0,0.7) !important; color: rgba(255,255,255,0.4) !important; }
+    .leaflet-control-attribution a { color: #f5c842 !important; }
+
+    /* Timeline */
+    .timeline { position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 110px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, #f5c842 5%, #f5c842 95%, transparent); }
+    .timeline-item { display: grid; grid-template-columns: 110px 1fr; gap: 0 28px; position: relative; }
+    .timeline-date-col { text-align: right; padding: 20px 0; }
+    .tl-date { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 700; color: #f5c842; display: block; }
+    .tl-day { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+    .timeline-dot { position: absolute; left: 110px; top: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; border-radius: 50%; background: #f5c842; border: 2px solid #111; z-index: 2; }
+    .timeline-dot.big { width: 14px; height: 14px; }
+    .timeline-content { padding: 18px 0 18px 28px; border-bottom: 1px solid #1e1e1e; }
+    .timeline-item:last-child .timeline-content { border-bottom: none; }
+    .tl-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    .tl-title em { font-style: italic; color: #f5c842; }
+    .tl-details { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 1px; line-height: 1.7; }
+    .tl-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; margin-top: 6px; margin-right: 4px; }
+    .tl-badge.gold { background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.25); color: #f5c842; }
+    .tl-badge.grey { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+    .tl-badge.red { background: rgba(245,100,50,0.08); border: 1px solid rgba(245,100,50,0.25); color: #f57832; }
+
+    /* ── GROCERY SECTION ── */
+    .grocery-section { background: #0d0d0d; padding: 80px 0; border-top: 1px solid #1e1e1e; }
+    .grocery-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .grocery-heading { text-align: center; margin-bottom: 52px; }
+    .grocery-heading .eyebrow { font-size: 10px; letter-spacing: 6px; text-transform: uppercase; color: #f5c842; margin-bottom: 14px; }
+    .grocery-heading h2 { font-family: 'Playfair Display', serif; font-size: clamp(30px, 4vw, 50px); font-weight: 700; }
+    .grocery-heading h2 em { font-style: italic; color: #f5c842; }
+    .grocery-heading .subhead { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: rgba(255,255,255,0.5); margin-top: 10px; }
+    .grocery-route { display: flex; align-items: stretch; gap: 0; margin-bottom: 48px; }
+    .grocery-stop { flex: 1; background: #1a1a1a; border: 1px solid #2a2a2a; padding: 28px 22px; position: relative; transition: border-color 0.3s; }
+    .grocery-stop:hover { border-color: #f5c842; }
+    .grocery-stop.highlight { border-color: #f5c842; background: rgba(245,200,66,0.04); }
+    .grocery-stop.highlight::before { content: '★ BEST STOP'; position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: #f5c842; color: #0a0a0a; font-size: 8px; font-weight: 800; letter-spacing: 2px; padding: 3px 10px; white-space: nowrap; }
+    .stop-connector { display: flex; align-items: center; padding: 0 4px; color: rgba(255,255,255,0.15); font-size: 16px; flex-shrink: 0; }
+    .stop-city { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+    .stop-time { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #f5c842; margin-bottom: 10px; }
+    .stop-stores { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .stop-stores li { font-size: 11px; color: rgba(255,255,255,0.5); display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }
+    .stop-stores li .si { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+    .stop-note { margin-top: 10px; font-size: 10px; color: rgba(255,255,255,0.28); font-style: italic; line-height: 1.5; border-top: 1px solid #2a2a2a; padding-top: 10px; }
+    .grocery-tips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .tip-card { background: #1a1a1a; border: 1px solid #2a2a2a; padding: 24px 22px; }
+    .tip-card .tip-icon { font-size: 24px; margin-bottom: 10px; }
+    .tip-card .tip-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .tip-card .tip-title em { font-style: italic; color: #f5c842; }
+    .tip-card .tip-body { font-size: 11px; color: rgba(255,255,255,0.45); line-height: 1.7; }
+    .tip-card .tip-body strong { color: rgba(255,255,255,0.7); }
+
+    /* ── CHAPTER HEADER ── */
+    .chapter-header { position: relative; height: 65vh; min-height: 450px; display: flex; align-items: flex-end; overflow: hidden; }
+    .chapter-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.42); transition: transform 0.6s ease; }
     .chapter-header:hover .chapter-bg { transform: scale(1.03); }
-    .chapter-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%);
-    }
-    .chapter-text {
-      position: relative;
-      z-index: 2;
-      padding: 56px 64px;
-    }
-    .chapter-num {
-      font-size: 9px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: #f5c842;
-      margin-bottom: 12px;
-    }
-    .chapter-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(48px, 7vw, 90px);
-      font-weight: 900;
-      line-height: 0.95;
-      letter-spacing: -2px;
-    }
+    .chapter-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 55%); }
+    .chapter-text { position: relative; z-index: 2; padding: 56px 64px; }
+    .chapter-num { font-size: 9px; letter-spacing: 6px; text-transform: uppercase; color: #f5c842; margin-bottom: 12px; }
+    .chapter-title { font-family: 'Playfair Display', serif; font-size: clamp(48px, 7vw, 90px); font-weight: 900; line-height: 0.95; letter-spacing: -2px; }
     .chapter-title em { font-style: italic; color: #f5c842; }
-    .chapter-dates {
-      margin-top: 16px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-    }
+    .chapter-dates { margin-top: 16px; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.55); }
 
-    /* ══════════════════════════════
-       DAY CARDS
-    ══════════════════════════════ */
+    /* ── DAY CARDS ── */
     .days-section { background: #0f0f0f; }
-
-    .day-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 480px;
-      border-bottom: 1px solid #1a1a1a;
-    }
+    .day-card { display: grid; grid-template-columns: 1fr 1fr; min-height: 480px; border-bottom: 1px solid #1a1a1a; }
     .day-card.reverse { direction: rtl; }
     .day-card.reverse > * { direction: ltr; }
-
-    .day-image {
-      position: relative;
-      overflow: hidden;
-      min-height: 380px;
-    }
-    .day-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.8s ease;
-    }
+    .day-image { position: relative; overflow: hidden; min-height: 360px; }
+    .day-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s ease; }
     .day-image:hover img { transform: scale(1.05); }
-
-    .day-date-badge {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: #f5c842;
-      color: #0a0a0a;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      padding: 7px 14px;
-      z-index: 2;
-    }
-
-    .day-content {
-      background: #141414;
-      padding: 52px 52px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .day-label {
-      font-size: 9px;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: #f5c842;
-      margin-bottom: 14px;
-    }
-    .day-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(28px, 3.5vw, 46px);
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
+    .day-date-badge { position: absolute; top: 20px; left: 20px; background: #f5c842; color: #0a0a0a; font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 7px 14px; z-index: 2; }
+    .day-card.travel-day .day-date-badge { background: #444; color: rgba(255,255,255,0.7); }
+    .day-content { background: #141414; padding: 52px 52px; display: flex; flex-direction: column; justify-content: center; }
+    .day-label { font-size: 9px; letter-spacing: 5px; text-transform: uppercase; color: #f5c842; margin-bottom: 14px; }
+    .day-card.travel-day .day-label { color: rgba(255,255,255,0.35); }
+    .day-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 46px); font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
     .day-title em { font-style: italic; color: #f5c842; }
-    .day-desc {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 19px;
-      font-weight: 300;
-      line-height: 1.75;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 28px;
-    }
-    .ideas-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-    .ideas-list li {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
-    }
-    .ideas-list li::before {
-      content: '';
-      display: block;
-      width: 18px;
-      height: 1px;
-      background: #f5c842;
-      flex-shrink: 0;
-    }
+    .day-desc { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 300; line-height: 1.75; color: rgba(255,255,255,0.68); margin-bottom: 28px; }
+    .ideas-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .ideas-list li { display: flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.42); }
+    .ideas-list li::before { content: ''; display: block; width: 18px; height: 1px; background: #f5c842; flex-shrink: 0; }
+    .day-card.travel-day .ideas-list li::before { background: rgba(255,255,255,0.25); }
 
-    /* ══════════════════════════════
-       FULL BLEED QUOTE
-    ══════════════════════════════ */
-    .full-bleed {
-      position: relative;
-      height: 55vh;
-      min-height: 380px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .full-bleed-bg {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      filter: brightness(0.38);
-    }
-    .full-bleed-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      padding: 0 40px;
-    }
-    .full-bleed-content blockquote {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(26px, 4.5vw, 58px);
-      font-style: italic;
-      line-height: 1.25;
-      max-width: 980px;
-    }
-    .full-bleed-content cite {
-      display: block;
-      margin-top: 22px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10px;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: #f5c842;
-      font-style: normal;
-    }
+    /* ── FULL BLEED QUOTE ── */
+    .full-bleed { position: relative; height: 55vh; min-height: 380px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .full-bleed-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.38); }
+    .full-bleed-content { position: relative; z-index: 2; text-align: center; padding: 0 40px; }
+    .full-bleed-content blockquote { font-family: 'Playfair Display', serif; font-size: clamp(26px, 4.5vw, 58px); font-style: italic; line-height: 1.25; max-width: 980px; }
+    .full-bleed-content cite { display: block; margin-top: 22px; font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: #f5c842; font-style: normal; }
 
-    /* ══════════════════════════════
-       TRANSITION / DRIVE SECTION
-    ══════════════════════════════ */
-    .drive-section {
-      position: relative;
-      height: 75vh;
-      min-height: 500px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-    }
-    .drive-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1800&q=80');
-      background-size: cover;
-      background-position: center 60%;
-      filter: brightness(0.38);
-    }
-    .drive-gradient {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom,
-        rgba(0,0,0,0.5) 0%,
-        rgba(0,0,0,0.1) 40%,
-        rgba(0,0,0,0.6) 100%);
-    }
-    .drive-content {
-      position: relative;
-      z-index: 2;
-      padding: 0 32px;
-      max-width: 900px;
-    }
-    .drive-content .eyebrow {
-      font-size: 10px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: #f5c842;
-      margin-bottom: 20px;
-    }
-    .drive-content h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(40px, 6vw, 80px);
-      font-weight: 900;
-      line-height: 1;
-      margin-bottom: 20px;
-    }
+    /* ── DRIVE / BIG SUR INTERLUDE ── */
+    .drive-section { position: relative; height: 75vh; min-height: 500px; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+    .drive-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1800&q=80'); background-size: cover; background-position: center 60%; filter: brightness(0.38); }
+    .drive-gradient { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.6) 100%); }
+    .drive-content { position: relative; z-index: 2; padding: 0 32px; max-width: 900px; }
+    .drive-content .eyebrow { font-size: 10px; letter-spacing: 6px; text-transform: uppercase; color: #f5c842; margin-bottom: 20px; }
+    .drive-content h2 { font-family: 'Playfair Display', serif; font-size: clamp(40px, 6vw, 80px); font-weight: 900; line-height: 1; margin-bottom: 20px; }
     .drive-content h2 em { font-style: italic; color: #f5c842; }
-    .drive-content p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(18px, 2.5vw, 26px);
-      font-style: italic;
-      font-weight: 300;
-      color: rgba(255,255,255,0.8);
-      line-height: 1.6;
-    }
-    .drive-route {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      margin-top: 36px;
-      flex-wrap: wrap;
-    }
-    .drive-stop {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-    }
-    .drive-arrow {
-      font-size: 12px;
-      color: #f5c842;
-    }
+    .drive-content p { font-family: 'Cormorant Garamond', serif; font-size: clamp(18px, 2.5vw, 26px); font-style: italic; font-weight: 300; color: rgba(255,255,255,0.8); line-height: 1.6; }
+    .drive-route { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 36px; flex-wrap: wrap; }
+    .drive-stop { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+    .drive-arrow { font-size: 12px; color: #f5c842; }
 
-    /* ══════════════════════════════
-       HIGHLIGHTS GRID
-    ══════════════════════════════ */
-    .highlights {
-      background: #0a0a0a;
-      padding: 80px 0 0;
-    }
-    .highlights-header {
-      text-align: center;
-      padding: 0 24px 60px;
-    }
-    .highlights-header .eyebrow {
-      font-size: 10px;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: #f5c842;
-      margin-bottom: 14px;
-    }
-    .highlights-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(36px, 5.5vw, 64px);
-      font-weight: 700;
-    }
+    /* ── HIGHLIGHTS GRID ── */
+    .highlights { background: #0a0a0a; padding: 80px 0 0; }
+    .highlights-header { text-align: center; padding: 0 24px 60px; }
+    .highlights-header .eyebrow { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: #f5c842; margin-bottom: 14px; }
+    .highlights-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5.5vw, 64px); font-weight: 700; }
     .highlights-header h2 em { font-style: italic; color: #f5c842; }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
-    }
-    .grid-tile {
-      position: relative;
-      aspect-ratio: 4/5;
-      overflow: hidden;
-    }
-    .grid-tile img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: brightness(0.65);
-      transition: transform 0.7s ease, filter 0.4s ease;
-    }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+    .grid-tile { position: relative; aspect-ratio: 4/5; overflow: hidden; }
+    .grid-tile img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.65); transition: transform 0.7s ease, filter 0.4s ease; }
     .grid-tile:hover img { transform: scale(1.06); filter: brightness(0.45); }
-    .grid-tile-info {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 28px 24px;
-      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
-    }
-    .grid-tile-info h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .grid-tile-info p {
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #f5c842;
-    }
+    .grid-tile-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px 24px; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%); }
+    .grid-tile-info h3 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .grid-tile-info p { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #f5c842; }
 
-    /* ══════════════════════════════
-       CTA / FOOTER
-    ══════════════════════════════ */
-    .cta {
-      position: relative;
-      height: 90vh;
-      min-height: 580px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-    }
-    .cta-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1800&q=85');
-      background-size: cover;
-      background-position: center 30%;
-      filter: brightness(0.38);
-    }
+    /* ── CTA ── */
+    .cta { position: relative; height: 90vh; min-height: 580px; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+    .cta-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1800&q=85'); background-size: cover; background-position: center 30%; filter: brightness(0.38); }
     .cta-content { position: relative; z-index: 2; padding: 0 24px; }
-    .cta-content .eyebrow {
-      font-size: 10px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: #f5c842;
-      margin-bottom: 20px;
-    }
-    .cta-content h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(44px, 7vw, 96px);
-      font-weight: 900;
-      line-height: 1;
-      margin-bottom: 20px;
-    }
+    .cta-content .eyebrow { font-size: 10px; letter-spacing: 6px; text-transform: uppercase; color: #f5c842; margin-bottom: 20px; }
+    .cta-content h2 { font-family: 'Playfair Display', serif; font-size: clamp(44px, 7vw, 96px); font-weight: 900; line-height: 1; margin-bottom: 20px; }
     .cta-content h2 em { font-style: italic; color: #f5c842; }
-    .cta-content p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px;
-      font-weight: 300;
-      font-style: italic;
-      color: rgba(255,255,255,0.8);
-      max-width: 600px;
-      margin: 0 auto 44px;
-    }
+    .cta-content p { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto 44px; }
     .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-    .btn-primary {
-      background: #f5c842; color: #0a0a0a;
-      font-size: 11px; font-weight: 700; letter-spacing: 3px;
-      text-transform: uppercase; padding: 18px 44px;
-      border: none; cursor: pointer; text-decoration: none;
-    }
-    .btn-secondary {
-      background: transparent; color: #fff;
-      font-size: 11px; font-weight: 600; letter-spacing: 3px;
-      text-transform: uppercase; padding: 17px 44px;
-      border: 1px solid rgba(255,255,255,0.35);
-      cursor: pointer; text-decoration: none;
-    }
+    .btn-primary { background: #f5c842; color: #0a0a0a; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 18px 44px; border: none; cursor: pointer; text-decoration: none; }
+    .btn-secondary { background: transparent; color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; padding: 17px 44px; border: 1px solid rgba(255,255,255,0.35); cursor: pointer; text-decoration: none; }
 
-    footer {
-      background: #050505;
-      text-align: center;
-      padding: 44px 24px;
-      border-top: 1px solid #181818;
-    }
-    footer .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 8px;
-      text-transform: uppercase;
-      color: #f5c842;
-      margin-bottom: 10px;
-    }
-    footer p {
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
-    }
+    footer { background: #050505; text-align: center; padding: 44px 24px; border-top: 1px solid #181818; }
+    footer .logo { font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 700; letter-spacing: 8px; text-transform: uppercase; color: #f5c842; margin-bottom: 10px; }
+    footer p { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.25); }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 800px) {
-      .day-card, .day-card.reverse {
-        grid-template-columns: 1fr;
-        direction: ltr;
-      }
+      .day-card, .day-card.reverse { grid-template-columns: 1fr; direction: ltr; }
       .day-content { padding: 36px 28px; }
       .chapter-text { padding: 36px 28px; }
       .grid-3 { grid-template-columns: 1fr 1fr; }
+      .flights-row { grid-template-columns: 1fr; }
+      .grocery-route { flex-direction: column; }
+      .grocery-tips { grid-template-columns: 1fr; }
+      .schedule-inner, .grocery-inner { padding: 0 20px; }
+      .timeline::before { left: 70px; }
+      .timeline-item { grid-template-columns: 70px 1fr; }
+      .timeline-dot { left: 70px; }
     }
     @media (max-width: 480px) {
       .grid-3 { grid-template-columns: 1fr; }
       .route-stop + .route-stop::before { display: none; }
     }
-
-    /* ══════════════════════════════
-       SCHEDULE SECTION
-    ══════════════════════════════ */
-    .schedule-section {
-      background: #111;
-      padding: 100px 0 80px;
-    }
-    .schedule-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px;
-    }
-    .schedule-heading {
-      text-align: center;
-      margin-bottom: 64px;
-    }
-    .schedule-heading .eyebrow {
-      font-size: 10px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: #f5c842;
-      margin-bottom: 14px;
-    }
-    .schedule-heading h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(36px, 5vw, 60px);
-      font-weight: 700;
-    }
-    .schedule-heading h2 em { font-style: italic; color: #f5c842; }
-
-    /* Flight Cards */
-    .flights-row {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 20px;
-      align-items: center;
-      margin-bottom: 60px;
-    }
-    .flight-card {
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      padding: 28px 32px;
-      position: relative;
-    }
-    .flight-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: #f5c842;
-    }
-    .flight-type {
-      font-size: 9px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #f5c842;
-      margin-bottom: 6px;
-    }
-    .flight-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 18px;
-    }
-    .flight-route {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .flight-city {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .flight-city .iata {
-      font-family: 'Playfair Display', serif;
-      font-size: 32px;
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -1px;
-    }
-    .flight-city .city-name {
-      font-size: 10px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 1px;
-    }
-    .flight-city .time {
-      font-size: 18px;
-      font-weight: 700;
-      color: #f5c842;
-      margin-top: 4px;
-    }
-    .flight-arrow-icon {
-      font-size: 20px;
-      color: rgba(255,255,255,0.2);
-      flex: 1;
-      text-align: center;
-    }
-    .flight-meta {
-      font-size: 10px;
-      letter-spacing: 1px;
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 12px;
-      padding-top: 12px;
-      border-top: 1px solid #2a2a2a;
-    }
-    .flight-seats {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .flight-seats span {
-      font-size: 10px;
-      letter-spacing: 1px;
-      color: rgba(255,255,255,0.5);
-    }
-    .flight-warning {
-      margin-top: 12px;
-      padding: 8px 12px;
-      background: rgba(245,100,50,0.12);
-      border: 1px solid rgba(245,100,50,0.3);
-      color: #f57832;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-
-    /* Drive Connector */
-    .drive-connector {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      text-align: center;
-      padding: 0 10px;
-    }
-    .drive-connector .drive-icon-big {
-      font-size: 28px;
-    }
-    .drive-connector .drive-label-sm {
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-    }
-    .drive-connector .drive-time-big {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 900;
-      color: #f5c842;
-    }
-    .drive-connector .drive-detail {
-      font-size: 9px;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 1px;
-      line-height: 1.5;
-    }
-
-    /* Map */
-    .map-wrapper {
-      margin-bottom: 60px;
-      border: 1px solid #2a2a2a;
-      overflow: hidden;
-    }
-    .map-label {
-      background: #1a1a1a;
-      padding: 14px 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid #2a2a2a;
-    }
-    .map-label span {
-      font-size: 9px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #f5c842;
-    }
-    .map-label-dot {
-      width: 6px;
-      height: 6px;
-      background: #f5c842;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.3); }
-    }
-    #trip-map {
-      height: 420px;
-      width: 100%;
-    }
-    /* Make Leaflet attribution dark */
-    .leaflet-control-attribution {
-      background: rgba(0,0,0,0.7) !important;
-      color: rgba(255,255,255,0.4) !important;
-    }
-    .leaflet-control-attribution a { color: #f5c842 !important; }
-
-    /* Timeline */
-    .timeline {
-      position: relative;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 110px;
-      top: 0; bottom: 0;
-      width: 1px;
-      background: linear-gradient(to bottom, transparent, #f5c842 5%, #f5c842 95%, transparent);
-    }
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 0 28px;
-      margin-bottom: 0;
-      position: relative;
-    }
-    .timeline-date-col {
-      text-align: right;
-      padding: 20px 0;
-    }
-    .tl-date {
-      font-family: 'Playfair Display', serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: #f5c842;
-      display: block;
-    }
-    .tl-day {
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-    }
-    .timeline-dot {
-      position: absolute;
-      left: 110px;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #f5c842;
-      border: 2px solid #111;
-      z-index: 2;
-    }
-    .timeline-dot.big {
-      width: 14px;
-      height: 14px;
-      background: #f5c842;
-    }
-    .timeline-content {
-      padding: 18px 0 18px 28px;
-      border-bottom: 1px solid #1e1e1e;
-    }
-    .timeline-item:last-child .timeline-content { border-bottom: none; }
-    .tl-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .tl-title em { font-style: italic; color: #f5c842; }
-    .tl-details {
-      font-size: 11px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 1px;
-      line-height: 1.7;
-    }
-    .tl-flight-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(245,200,66,0.1);
-      border: 1px solid rgba(245,200,66,0.25);
-      color: #f5c842;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      margin-top: 6px;
-    }
-    .tl-drive-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.5);
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      margin-top: 6px;
-      margin-left: 6px;
-    }
-    .tl-warning-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(245,100,50,0.08);
-      border: 1px solid rgba(245,100,50,0.25);
-      color: #f57832;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      padding: 4px 10px;
-      margin-top: 6px;
-      margin-left: 6px;
-    }
-
-    @media (max-width: 700px) {
-      .flights-row { grid-template-columns: 1fr; }
-      .drive-connector { flex-direction: row; justify-content: center; }
-      .timeline::before { left: 70px; }
-      .timeline-item { grid-template-columns: 70px 1fr; }
-      .timeline-dot { left: 70px; }
-      .schedule-inner { padding: 0 20px; }
-    }
-
-    /* ══════════════════════════════
-       GROCERY LOGISTICS SECTION
-    ══════════════════════════════ */
-    .grocery-section {
-      background: #0d0d0d;
-      padding: 80px 0;
-      border-top: 1px solid #1e1e1e;
-    }
-    .grocery-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px;
-    }
-    .grocery-heading {
-      text-align: center;
-      margin-bottom: 52px;
-    }
-    .grocery-heading .eyebrow {
-      font-size: 10px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: #f5c842;
-      margin-bottom: 14px;
-    }
-    .grocery-heading h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(30px, 4vw, 50px);
-      font-weight: 700;
-    }
-    .grocery-heading h2 em { font-style: italic; color: #f5c842; }
-    .grocery-heading .subhead {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 18px;
-      color: rgba(255,255,255,0.5);
-      margin-top: 10px;
-    }
-
-    /* Route visual */
-    .grocery-route {
-      display: flex;
-      align-items: stretch;
-      gap: 0;
-      margin-bottom: 48px;
-      position: relative;
-    }
-    .grocery-stop {
-      flex: 1;
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      padding: 28px 24px;
-      position: relative;
-      transition: border-color 0.3s;
-    }
-    .grocery-stop:hover { border-color: #f5c842; }
-    .grocery-stop.highlight {
-      border-color: #f5c842;
-      background: rgba(245,200,66,0.05);
-    }
-    .grocery-stop.highlight::before {
-      content: '★ BEST STOP';
-      position: absolute;
-      top: -1px; left: 50%; transform: translateX(-50%);
-      background: #f5c842;
-      color: #0a0a0a;
-      font-size: 8px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      padding: 3px 10px;
-      white-space: nowrap;
-    }
-    .stop-connector {
-      display: flex;
-      align-items: center;
-      padding: 0 6px;
-      color: rgba(255,255,255,0.2);
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-    .stop-city {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .stop-time {
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #f5c842;
-      margin-bottom: 12px;
-    }
-    .stop-stores {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .stop-stores li {
-      font-size: 11px;
-      color: rgba(255,255,255,0.55);
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      line-height: 1.4;
-    }
-    .stop-stores li .store-icon {
-      font-size: 13px;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .stop-note {
-      margin-top: 12px;
-      font-size: 10px;
-      color: rgba(255,255,255,0.3);
-      font-style: italic;
-      line-height: 1.5;
-      border-top: 1px solid #2a2a2a;
-      padding-top: 10px;
-    }
-
-    /* Tips grid */
-    .grocery-tips {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    .tip-card {
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      padding: 24px 22px;
-    }
-    .tip-card .tip-icon { font-size: 24px; margin-bottom: 10px; }
-    .tip-card .tip-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .tip-card .tip-title em { font-style: italic; color: #f5c842; }
-    .tip-card .tip-body {
-      font-size: 11px;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.7;
-    }
-    .tip-card .tip-body strong { color: rgba(255,255,255,0.7); }
-
-    @media (max-width: 800px) {
-      .grocery-route { flex-direction: column; }
-      .stop-connector { transform: rotate(90deg); justify-content: center; }
-      .grocery-tips { grid-template-columns: 1fr; }
-      .grocery-inner { padding: 0 20px; }
-    }
   </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     HERO
-══════════════════════════════════════ -->
+<!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-gradient"></div>
@@ -1070,41 +233,36 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     ROUTE STRIP
-══════════════════════════════════════ -->
+<!-- ═══════════ ROUTE STRIP ═══════════ -->
 <div class="route-strip">
   <div class="route-stop">
-    <div class="date">May 31 · Sun</div>
-    <div class="city">Travel Day</div>
-    <div class="nights">STL → SFO → Yosemite · Arrive ~5 PM</div>
+    <div class="rs-date">May 31 · Sun</div>
+    <div class="rs-city">Travel Day</div>
+    <div class="rs-note">STL → SFO → Yosemite</div>
   </div>
   <div class="route-stop">
-    <div class="date">Jun 1–3 · Mon–Wed</div>
-    <div class="city">3 Full Days</div>
-    <div class="nights">Yosemite National Park</div>
+    <div class="rs-date">Jun 1–2 · Mon–Tue</div>
+    <div class="rs-city">2 Full Days</div>
+    <div class="rs-note">Yosemite National Park</div>
   </div>
   <div class="route-stop">
-    <div class="date">June 4 · Thu</div>
-    <div class="city">Drive Day</div>
-    <div class="nights">Leave Yosemite → Head South</div>
+    <div class="rs-date">June 3 · Wed</div>
+    <div class="rs-city">Drive Day</div>
+    <div class="rs-note">Leave Yosemite → South</div>
   </div>
   <div class="route-stop">
-    <div class="date">June 5 · Fri</div>
-    <div class="city">Big Sur</div>
-    <div class="nights">Highway 1 · Coastal Drive</div>
+    <div class="rs-date">June 4–5 · Thu–Fri</div>
+    <div class="rs-city">Big Sur + Monterey</div>
+    <div class="rs-note">Highway 1 · The Coast</div>
   </div>
   <div class="route-stop">
-    <div class="date">June 6 · Sat</div>
-    <div class="city">Fly Home</div>
-    <div class="nights">Monterey → SFO · WN3858 10:25 AM</div>
+    <div class="rs-date">June 6 · Sat</div>
+    <div class="rs-city">Fly Home</div>
+    <div class="rs-note">SFO → STL · WN3858</div>
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════
-     SCHEDULE / FLIGHTS
-══════════════════════════════════════ -->
+<!-- ═══════════ SCHEDULE SECTION ═══════════ -->
 <section class="schedule-section">
   <div class="schedule-inner">
 
@@ -1113,13 +271,10 @@
       <h2>Your Trip at a <em>Glance</em></h2>
     </div>
 
-    <!-- ── FLIGHT CARDS ── -->
     <div class="flights-row">
-
-      <!-- Outbound -->
       <div class="flight-card">
         <div class="flight-type">✈ Outbound · WN 1469</div>
-        <div class="flight-num">Boeing 737-800 · 4h 25m</div>
+        <div class="flight-num">Boeing 737-800 · 4h 25m · WiFi Available</div>
         <div class="flight-route">
           <div class="flight-city">
             <span class="iata">STL</span>
@@ -1133,25 +288,23 @@
             <span class="time">12:10 PM</span>
           </div>
         </div>
-        <div class="flight-meta">Sunday, May 31, 2026 · WiFi Available</div>
+        <div class="flight-meta">Sunday, May 31, 2026</div>
         <div class="flight-seats">
           <span>Michael Menne — Seat 19C, Aisle</span>
           <span>Olivia Menne — Seat 17F, Window</span>
         </div>
       </div>
 
-      <!-- Drive connector -->
       <div class="drive-connector">
-        <div class="drive-icon-big">🚗</div>
-        <div class="drive-label-sm">Then Drive</div>
-        <div class="drive-time-big">~4 hrs</div>
-        <div class="drive-detail">SFO → Yosemite<br>187 mi via Hwy 120<br>Arrive ~5 PM</div>
+        <div class="dc-icon">🚗</div>
+        <div class="dc-label">Then Drive</div>
+        <div class="dc-time">~4 hrs</div>
+        <div class="dc-detail">SFO → Yosemite<br>187 mi via Hwy 120<br>Arrive ~5 PM</div>
       </div>
 
-      <!-- Return -->
       <div class="flight-card">
         <div class="flight-type">✈ Return · WN 3858</div>
-        <div class="flight-num">Boeing 737-800 · 3h 50m</div>
+        <div class="flight-num">Boeing 737-800 · 3h 50m · WiFi Available</div>
         <div class="flight-route">
           <div class="flight-city">
             <span class="iata">SFO</span>
@@ -1165,389 +318,293 @@
             <span class="time">4:15 PM</span>
           </div>
         </div>
-        <div class="flight-meta">Saturday, June 6, 2026 · WiFi Available</div>
+        <div class="flight-meta">Saturday, June 6, 2026</div>
         <div class="flight-seats">
           <span>Michael Menne — Seat 24C, Aisle</span>
           <span>Olivia Menne — Seat 23F, Window</span>
         </div>
-        <div class="flight-warning">⚠ Monterey → SFO is ~2 hrs — depart by 7:30 AM</div>
+        <div class="flight-warning">⚠ Monterey → SFO ~2 hrs — depart by 7:30 AM</div>
       </div>
+    </div>
 
-    </div><!-- /flights-row -->
-
-    <!-- ── MAP ── -->
+    <!-- MAP -->
     <div class="map-wrapper">
       <div class="map-label">
-        <div class="map-label-dot"></div>
-        <span>Road Trip Route · SFO → Yosemite → Big Sur → Monterey → SFO</span>
+        <div class="map-dot"></div>
+        <span>Road Trip Route · SFO → Oakhurst → Yosemite Forks → Valley → Big Sur → Monterey → SFO</span>
       </div>
       <div id="trip-map"></div>
     </div>
 
-    <!-- ── TIMELINE ── -->
+    <!-- TIMELINE -->
     <div class="timeline">
 
       <div class="timeline-item">
-        <div class="timeline-date-col">
-          <span class="tl-date">May 31</span>
-          <span class="tl-day">Sunday</span>
-        </div>
+        <div class="timeline-date-col"><span class="tl-date">May 31</span><span class="tl-day">Sunday</span></div>
         <div class="timeline-dot big"></div>
         <div class="timeline-content">
-          <div class="tl-title">Travel Day → <em>Arrive Yosemite</em></div>
-          <div class="tl-details">WN1469 departs STL 9:45 AM · Lands SFO 12:10 PM · Rental car + grocery stop Manteca ~2:30 PM · Drive to Yosemite · Check in ~5 PM · Easy evening only</div>
-          <span class="tl-flight-badge">✈ WN1469</span>
-          <span class="tl-drive-badge">🛒 Grocery stop: Manteca</span>
-          <span class="tl-drive-badge">🚗 Arrive ~5 PM</span>
+          <div class="tl-title">Travel Day → <em>Yosemite Forks</em></div>
+          <div class="tl-details">WN1469 departs STL 9:45 AM · Lands SFO 12:10 PM · Rental car · Drive CA-99 S → Hwy 41 N · Grocery stop Oakhurst ~3:30 PM · Arrive Yosemite Forks ~5 PM</div>
+          <span class="tl-badge gold">✈ WN1469</span>
+          <span class="tl-badge grey">🛒 Grocery: Oakhurst</span>
+          <span class="tl-badge grey">🚗 Arrive ~5 PM</span>
         </div>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-date-col">
-          <span class="tl-date">June 1</span>
-          <span class="tl-day">Monday</span>
-        </div>
+        <div class="timeline-date-col"><span class="tl-date">June 1</span><span class="tl-day">Monday</span></div>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
           <div class="tl-title"><em>Full Day 1</em> — Waterfalls</div>
-          <div class="tl-details">Lower Yosemite Fall · Vernal Fall Mist Trail · Mirror Lake Loop · Happy Isles</div>
+          <div class="tl-details">Lower Yosemite Fall · Vernal Fall Mist Trail · Mirror Lake Loop · Happy Isles Nature Center</div>
         </div>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-date-col">
-          <span class="tl-date">June 2</span>
-          <span class="tl-day">Tuesday</span>
-        </div>
+        <div class="timeline-date-col"><span class="tl-date">June 2</span><span class="tl-day">Tuesday</span></div>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
           <div class="tl-title"><em>Full Day 2</em> — Adventure</div>
-          <div class="tl-details">Glacier Point · Half Dome (if permitted) · Rock climbing · Valley bike loop</div>
+          <div class="tl-details">Glacier Point · Half Dome (permit required) · Rock climbing · Valley bike loop · Mariposa Grove</div>
         </div>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-date-col">
-          <span class="tl-date">June 3</span>
-          <span class="tl-day">Wednesday</span>
-        </div>
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-          <div class="tl-title"><em>Full Day 3</em> — The Giants</div>
-          <div class="tl-details">Mariposa Grove · Ancient Sequoias · Wawona Meadow · Pioneer History Center</div>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-date-col">
-          <span class="tl-date">June 4</span>
-          <span class="tl-day">Thursday</span>
-        </div>
+        <div class="timeline-date-col"><span class="tl-date">June 3</span><span class="tl-day">Wednesday</span></div>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
           <div class="tl-title">Drive Day · <em>Leave Yosemite</em></div>
-          <div class="tl-details">Pack up camp early · Quick stop at Tunnel View · Coffee in Groveland · Drive south to Big Sur / Monterey area</div>
-          <span class="tl-drive-badge">🚗 Head toward Big Sur</span>
+          <div class="tl-details">Pack up early · Tunnel View on the way out · Coffee in Groveland · Drive south to Big Sur via Hwy 120 → 99 → 1</div>
+          <span class="tl-badge grey">🚗 Head to Big Sur</span>
         </div>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-date-col">
-          <span class="tl-date">June 5</span>
-          <span class="tl-day">Friday</span>
-        </div>
+        <div class="timeline-date-col"><span class="tl-date">June 4</span><span class="tl-day">Thursday</span></div>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
-          <div class="tl-title"><em>Highway 1</em> — Big Sur Coast</div>
-          <div class="tl-details">Bixby Bridge · McWay Falls · Julia Pfeiffer Burns State Park · Arrive Monterey area</div>
-          <span class="tl-drive-badge">🚗 Coastal Highway 1</span>
+          <div class="tl-title"><em>Big Sur</em> — Highway 1</div>
+          <div class="tl-details">Bixby Bridge · McWay Falls · Julia Pfeiffer Burns State Park · Arrive Monterey</div>
+          <span class="tl-badge grey">🌊 Coastal Highway 1</span>
         </div>
       </div>
 
       <div class="timeline-item">
-        <div class="timeline-date-col">
-          <span class="tl-date">June 6</span>
-          <span class="tl-day">Saturday</span>
+        <div class="timeline-date-col"><span class="tl-date">June 5</span><span class="tl-day">Friday</span></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="tl-title"><em>Monterey</em> — Full Day</div>
+          <div class="tl-details">Monterey Bay Aquarium · Cannery Row · Carmel-by-the-Sea · Point Lobos · 17-Mile Drive</div>
         </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date-col"><span class="tl-date">June 6</span><span class="tl-day">Saturday</span></div>
         <div class="timeline-dot big"></div>
         <div class="timeline-content">
-          <div class="tl-title"><em>Monterey</em> → Fly Home</div>
-          <div class="tl-details">Early morning in Monterey · Depart by 7:30 AM · Drive ~2 hrs to SFO · WN3858 departs 10:25 AM · Land STL 4:15 PM</div>
-          <span class="tl-flight-badge">✈ WN3858</span>
-          <span class="tl-warning-badge">⚠ Early departure — 7:30 AM</span>
+          <div class="tl-title"><em>Fly Home</em> — SFO → STL</div>
+          <div class="tl-details">Depart Monterey by 7:30 AM · Drive ~2 hrs to SFO · WN3858 departs 10:25 AM · Land STL 4:15 PM</div>
+          <span class="tl-badge gold">✈ WN3858</span>
+          <span class="tl-badge red">⚠ Depart Monterey 7:30 AM</span>
         </div>
       </div>
 
     </div><!-- /timeline -->
-
   </div><!-- /schedule-inner -->
 </section>
 
-
-<!-- ══════════════════════════════════════
-     GROCERY & LOGISTICS
-══════════════════════════════════════ -->
+<!-- ═══════════ GROCERY LOGISTICS ═══════════ -->
 <section class="grocery-section">
   <div class="grocery-inner">
-
     <div class="grocery-heading">
       <p class="eyebrow">Logistics · Grocery Plan</p>
       <h2>Stock Up <em>Smart</em></h2>
       <p class="subhead">Flying in = no cooler. Here's the plan — buy one on the way.</p>
     </div>
 
-    <!-- Route visual: SFO → Manteca → Groveland → Yosemite -->
     <div class="grocery-route">
-
       <div class="grocery-stop">
-        <div class="stop-time">~1:00 PM · Land &amp; Drive</div>
+        <div class="stop-time">~12:30 PM · Depart SFO</div>
         <div class="stop-city">SFO</div>
         <ul class="stop-stores">
-          <li><span class="store-icon">✈</span>Pick up rental car. Head east on I-580 → I-205 → Hwy 120.</li>
+          <li><span class="si">✈</span>Pick up rental car. Head south on US-101 → I-580 → CA-99 S toward Fresno. No cooler? You'll grab one in Oakhurst.</li>
         </ul>
-        <div class="stop-note">No cooler? No problem. You'll grab one in ~90 min.</div>
+        <div class="stop-note">Route: SFO → CA-99 S → Madera → Hwy 41 N → Oakhurst → Yosemite Forks</div>
       </div>
-
       <div class="stop-connector">→</div>
-
       <div class="grocery-stop highlight">
-        <div class="stop-time">~2:30–3:00 PM · Main Stop</div>
-        <div class="stop-city">Manteca, CA</div>
+        <div class="stop-time">~3:30 PM · Main Stop</div>
+        <div class="stop-city">Oakhurst, CA</div>
         <ul class="stop-stores">
-          <li><span class="store-icon">🏬</span><strong style="color:rgba(255,255,255,0.75)">Costco</strong> — 629 E Yosemite Ave (right off Hwy 120 Exit 3). Bulk snacks, drinks, sunscreen, everything.</li>
-          <li><span class="store-icon">🛒</span><strong style="color:rgba(255,255,255,0.75)">Walmart Supercenter</strong> — 1205 S Main St. Buy a $25 hard cooler + 2 bags of ice here.</li>
-          <li><span class="store-icon">🥦</span><strong style="color:rgba(255,255,255,0.75)">Safeway / El Rancho</strong> — Fresh produce, deli, bakery.</li>
+          <li><span class="si">🛒</span><strong style="color:rgba(255,255,255,0.75)">Vons</strong> — 40044 Hwy 49 (at Hwy 41). Open 5 AM–midnight. Buy your cooler + ice here too.</li>
+          <li><span class="si">🥦</span><strong style="color:rgba(255,255,255,0.75)">Raley's</strong> — 40041 CA-49, directly across the intersection. Better natural/fresh selection.</li>
+          <li><span class="si">💰</span><strong style="color:rgba(255,255,255,0.75)">Grocery Outlet</strong> — 40301 Junction Dr. Budget-friendly bulk and snacks.</li>
         </ul>
-        <div class="stop-note">💡 Pro move: Order Walmart grocery pickup online the night before (schedule for ~2:30 PM pickup). Roll in, grab it, and go.</div>
+        <div class="stop-note">💡 All three are at the Hwy 41/49 intersection — literally on your route, 15 min from Yosemite Forks. Pre-order Vons pickup online before your flight.</div>
       </div>
-
       <div class="stop-connector">→</div>
-
-      <div class="grocery-stop">
-        <div class="stop-time">~4:00 PM · Last Chance</div>
-        <div class="stop-city">Groveland, CA</div>
-        <ul class="stop-stores">
-          <li><span class="store-icon">🏪</span><strong style="color:rgba(255,255,255,0.75)">Mar-Val Main Street Market</strong> — 19000 Hwy 120. Open 8 AM–8 PM. Good produce, local goods, last full grocery stop.</li>
-        </ul>
-        <div class="stop-note">~1 hour from Yosemite Valley. Good for forgotten items or fresh bread.</div>
-      </div>
-
-      <div class="stop-connector">→</div>
-
       <div class="grocery-stop">
         <div class="stop-time">~5:00 PM · Arrive</div>
-        <div class="stop-city">Yosemite</div>
+        <div class="stop-city">Yosemite Forks</div>
         <ul class="stop-stores">
-          <li><span class="store-icon">🏔</span><strong style="color:rgba(255,255,255,0.75)">Yosemite Village Store</strong> — Emergency backup only. Convenience store prices. Open seasonally.</li>
-          <li><span class="store-icon">🚫</span>No Instacart, DoorDash, or Amazon delivery. Bears + park rules = no outside delivery services.</li>
+          <li><span class="si">🏠</span>Check in, unpack, stock the fridge. You're 10 miles from the South Entrance.</li>
+          <li><span class="si">🦌</span>Bass Lake is minutes away — great for a quick sunset walk.</li>
         </ul>
-        <div class="stop-note">Food must be stored in bear boxes at all times — not in your car!</div>
+        <div class="stop-note">Oakhurst is your grocery base for the whole stay — easy to pop back if you need anything.</div>
       </div>
+    </div>
 
-    </div><!-- /grocery-route -->
-
-    <!-- Tips -->
     <div class="grocery-tips">
-
       <div class="tip-card">
         <div class="tip-icon">🧊</div>
         <div class="tip-title">The <em>Cooler</em> Plan</div>
-        <div class="tip-body">
-          Buy a <strong>$25–35 hard cooler</strong> at Walmart Manteca on arrival day.
-          Pick up 2 bags of ice. It'll last 2–3 days. Restock ice at the Yosemite
-          Village Store or any gas station in Groveland on Day 3.
-        </div>
+        <div class="tip-body">Buy a <strong>$25–35 hard cooler</strong> at Vons in Oakhurst on arrival day — it's right on your route. Grab 2 bags of ice. Since you're at a house/rental, you'll have a real fridge too, so the cooler is mainly for park day lunches.</div>
       </div>
-
       <div class="tip-card">
         <div class="tip-icon">📦</div>
         <div class="tip-title"><em>Pre-Order</em> Pickup</div>
-        <div class="tip-body">
-          The night before your flight, place a <strong>Walmart.com grocery order</strong>
-          for pickup at Manteca store #1840. Schedule the pickup window for 2:30–3 PM.
-          You land at noon — plenty of buffer. Walk in, grab your cart, done.
-        </div>
+        <div class="tip-body">The night before your flight, place a <strong>Vons.com grocery order</strong> for pickup at the Oakhurst location (40044 Hwy 49). Schedule for 3:30–4 PM — you land at noon, it's plenty of time. Walk in, grab your cart, done.</div>
       </div>
-
       <div class="tip-card">
-        <div class="tip-icon">🐻</div>
-        <div class="tip-title">Bear Box <em>Rules</em></div>
-        <div class="tip-body">
-          All food, toiletries, and scented items <strong>must go in the bear box</strong>
-          whenever you're away from camp or sleeping. This includes chapstick, sunscreen,
-          and gum. Rangers will ticket you — and bears will destroy your car.
-        </div>
+        <div class="tip-icon">🍽️</div>
+        <div class="tip-title"><em>Oakhurst</em> Eats</div>
+        <div class="tip-body">Oakhurst is your de facto base town with real restaurants, breweries, and cafés — not tourist-trap prices like inside the park. <strong>Great for dinner on arrival night</strong> and coffee runs before early park days. 15 min from your door.</div>
       </div>
-
-    </div><!-- /grocery-tips -->
-
-  </div><!-- /grocery-inner -->
+    </div>
+  </div>
 </section>
 
-
-<!-- ══════════════════════════════════════
-     CHAPTER 1 — YOSEMITE
-══════════════════════════════════════ -->
+<!-- ═══════════ CHAPTER 1 — YOSEMITE ═══════════ -->
 <div class="chapter-header">
   <div class="chapter-bg" style="background-image: url('https://images.unsplash.com/photo-1562310503-a918c4c61e38?w=1600&q=85');"></div>
   <div class="chapter-overlay"></div>
   <div class="chapter-text">
-    <p class="chapter-num">Chapter One · May 31 – June 4</p>
+    <p class="chapter-num">Chapter One · May 31 – June 3</p>
     <h2 class="chapter-title">YOSE<em>MITE</em></h2>
-    <p class="chapter-dates">3 Full Days in the Park · Arrival May 31 · Depart June 4</p>
+    <p class="chapter-dates">2 Full Days in the Park · Based in Yosemite Forks · 10 mi from South Entrance · Depart June 3</p>
   </div>
 </div>
 
 <section class="days-section">
 
-  <!-- DAY 1 — May 31 ARRIVAL -->
-  <div class="day-card">
+  <!-- MAY 31 — ARRIVAL / TRAVEL DAY -->
+  <div class="day-card travel-day">
     <div class="day-image">
       <div class="day-date-badge">May 31 · Sunday · Travel Day</div>
       <img src="https://images.unsplash.com/photo-1472396961693-142e6e269027?w=900&q=85" alt="Yosemite Valley arrival"/>
     </div>
     <div class="day-content">
-      <p class="day-label">Arrival Day · Land ~12:10 PM · Drive ~4 hrs</p>
-      <h2 class="day-title">First Look at the <em>Valley</em></h2>
+      <p class="day-label">Arrival Day · Land 12:10 PM · Yosemite Forks via Hwy 41</p>
+      <h2 class="day-title">Settle In, <em>Rest Up</em></h2>
       <p class="day-desc">
-        You'll roll into Yosemite around 5 PM after the drive from SFO — including your
-        grocery stop in Manteca. Tonight is for settling in, not summiting anything.
-        Windows down, music off. Let the valley do the talking.
+        From SFO you'll head south on CA-99 through Fresno, then north on Hwy 41 through
+        Oakhurst — your grocery stop — before arriving at Yosemite Forks around 5 PM.
+        You're 10 miles from the South Entrance and the Mariposa Grove is practically
+        in your backyard. Tonight is for unpacking. The park opens at dawn.
       </p>
       <ul class="ideas-list">
-        <li>Grocery stop in Manteca (~2:30 PM) — buy cooler + supplies</li>
-        <li>Check in, unpack, get camp or cabin set up</li>
-        <li>Short Valley View Overlook walk at dusk (15 min, flat)</li>
-        <li>Campfire dinner — easy first night</li>
-        <li>Early to bed — big days ahead</li>
+        <li>Grocery stop in Oakhurst (~3:30 PM) — Vons or Raley's on Hwy 41/49</li>
+        <li>Arrive Yosemite Forks ~5 PM — check in, unpack, decompress</li>
+        <li>Quick sunset walk — Bass Lake is just minutes away</li>
+        <li>Dinner in or out — easy first night</li>
+        <li>Early to bed — depart for the valley by 8 AM tomorrow</li>
       </ul>
     </div>
   </div>
 
-  <!-- DAY 2 — June 1 -->
+  <!-- JUNE 1 — FULL DAY 1 -->
   <div class="day-card reverse">
     <div class="day-image">
       <div class="day-date-badge">June 1 · Monday · Full Park Day</div>
       <img src="https://images.unsplash.com/photo-1615243029542-4fcced32f2e0?w=900&q=85" alt="Yosemite Falls"/>
     </div>
     <div class="day-content">
-      <p class="day-label">Full Day 1 · Chase the Falls</p>
+      <p class="day-label">Full Day 1 · Chase the Falls · 45 min to the Valley</p>
       <h2 class="day-title">The <em>Waterfall</em> Tour</h2>
       <p class="day-desc">
-        Yosemite has more waterfalls than almost anywhere in North America —
-        and late spring is when they're absolute fire. Lace up and go.
-        The roar of Yosemite Falls will stay with you forever.
+        Leave Yosemite Forks by 8 AM, enter through the South Entrance, and you're in
+        Yosemite Valley by 9. Late spring waterfalls are at absolute peak — snowmelt
+        is still roaring through every canyon. The roar of Yosemite Falls
+        will stay with you forever.
       </p>
       <ul class="ideas-list">
-        <li>Lower Yosemite Fall trail (easy, incredible)</li>
-        <li>Vernal Fall via the Mist Trail</li>
-        <li>Mirror Lake loop for the reflection</li>
-        <li>Happy Isles Nature Center (great for kids)</li>
+        <li>Enter via South Entrance (Hwy 41) — depart by 8 AM</li>
+        <li>Lower Yosemite Fall trail (easy, stunning)</li>
+        <li>Vernal Fall via the Mist Trail — get soaked, love it</li>
+        <li>Mirror Lake loop for the Half Dome reflection</li>
+        <li>Happy Isles Nature Center</li>
       </ul>
     </div>
   </div>
 
-  <!-- DAY 3 — June 2 -->
+  <!-- JUNE 2 — FULL DAY 2 -->
   <div class="day-card">
     <div class="day-image">
       <div class="day-date-badge">June 2 · Tuesday · Full Park Day</div>
-      <img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6?w=900&q=85" alt="Rock climbing Yosemite"/>
+      <img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6?w=900&q=85" alt="Glacier Point Yosemite"/>
     </div>
     <div class="day-content">
-      <p class="day-label">Full Day 2 · Go Big</p>
+      <p class="day-label">Full Day 2 · Giants &amp; Panoramas · Close to Home Base</p>
       <h2 class="day-title">The <em>Adventure</em> Day</h2>
       <p class="day-desc">
-        Pick your level of epic. Permits willing, the Half Dome cables
-        await. Not feeling cables? Glacier Point delivers the same
-        jaw-drop in a fraction of the effort. No wrong answers today.
+        Here's a Yosemite Forks advantage: Mariposa Grove — 500 ancient giant sequoias —
+        is only 15 minutes from your door. Do the grove in the morning before crowds
+        arrive, then drive up to Glacier Point for the ultimate valley panorama in the afternoon.
       </p>
       <ul class="ideas-list">
-        <li>Half Dome cables (permit required — plan ahead!)</li>
-        <li>Glacier Point road — the ultimate panorama</li>
-        <li>Rock climbing intro session in the Valley</li>
-        <li>Valley bike rental loop for the whole family</li>
+        <li>Mariposa Grove — 15 min from Yosemite Forks, go early</li>
+        <li>Grizzly Giant — the oldest sequoia in the grove</li>
+        <li>Glacier Point road — jaw-dropping Half Dome views</li>
+        <li>Half Dome cables (permit required — plan way ahead!)</li>
+        <li>Valley bike rental loop if energy remains</li>
       </ul>
     </div>
   </div>
 
-  <!-- DAY 4 — June 3 -->
-  <div class="day-card reverse">
+  <!-- JUNE 3 — DEPARTURE / DRIVE DAY -->
+  <div class="day-card travel-day reverse">
     <div class="day-image">
-      <div class="day-date-badge">June 3 · Wednesday · Full Park Day</div>
-      <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=900&q=85" alt="Giant Sequoias"/>
+      <div class="day-date-badge">June 3 · Wednesday · Drive Day</div>
+      <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=900&q=85" alt="Yosemite departure morning"/>
     </div>
     <div class="day-content">
-      <p class="day-label">Full Day 3 · The Giants</p>
-      <h2 class="day-title">Walk Among <em>Sequoias</em></h2>
-      <p class="day-desc">
-        These trees were alive when the Roman Empire rose and fell.
-        The Mariposa Grove's giant sequoias don't just impress —
-        they realign your entire sense of scale. Give this day
-        the slow pace it deserves.
-      </p>
-      <ul class="ideas-list">
-        <li>Mariposa Grove — 500 ancient sequoias</li>
-        <li>Grizzly Giant, the oldest tree in the grove</li>
-        <li>Wawona Meadow loop for families</li>
-        <li>Pioneer Yosemite History Center</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- DAY 5 — June 4 DEPARTURE -->
-  <div class="day-card">
-    <div class="day-image">
-      <div class="day-date-badge">June 4 · Thursday · Drive Day</div>
-      <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=900&q=85" alt="Yosemite departure"/>
-    </div>
-    <div class="day-content">
-      <p class="day-label">Departure Day · Head to the Coast</p>
+      <p class="day-label">Departure Day · Yosemite Forks → Big Sur</p>
       <h2 class="day-title">Goodbye <em>Mountains</em></h2>
       <p class="day-desc">
-        Rise early, pack up camp, and squeeze in one last moment before hitting the road.
-        Tunnel View takes 10 minutes and is the greatest goodbye in the national park system.
-        Then point the car toward Big Sur — the Pacific is calling.
+        Check out of Yosemite Forks and head south on Hwy 41 — you're already
+        pointed the right direction. A quick stop at Tunnel View on the way
+        through the park is the greatest goodbye in the national park system.
+        Then it's Fresno → the 99 → and eventually the Pacific.
       </p>
       <ul class="ideas-list">
-        <li>Pack up camp + load the car (early morning)</li>
-        <li>Quick stop: Tunnel View on the way out (10 min, unforgettable)</li>
-        <li>Coffee in Groveland — last mountain town</li>
-        <li>Drive south toward Big Sur via Hwy 120 → 99 → 1</li>
-        <li>Arrive Big Sur / Monterey area by evening</li>
+        <li>Check out, pack the car — early morning</li>
+        <li>Optional: Tunnel View on the way through the valley</li>
+        <li>Drive south via Hwy 41 → Fresno → CA-99 → coast</li>
+        <li>Lunch stop in Fresno or along the way</li>
+        <li>Arrive Big Sur area by evening</li>
       </ul>
     </div>
   </div>
 
 </section>
 
-<!-- ══════════════════════════════════════
-     JOHN MUIR QUOTE
-══════════════════════════════════════ -->
+<!-- ═══════════ MUIR QUOTE ═══════════ -->
 <div class="full-bleed">
   <div class="full-bleed-bg" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1800&q=80');"></div>
   <div class="full-bleed-content">
-    <blockquote>
-      "The mountains are calling and I must go."
-    </blockquote>
+    <blockquote>"The mountains are calling and I must go."</blockquote>
     <cite>— John Muir</cite>
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════
-     DRIVE INTERLUDE
-══════════════════════════════════════ -->
+<!-- ═══════════ BIG SUR INTERLUDE ═══════════ -->
 <div class="drive-section">
   <div class="drive-bg"></div>
   <div class="drive-gradient"></div>
   <div class="drive-content">
-    <p class="eyebrow">June 5 · The Road Between</p>
+    <p class="eyebrow">June 3 · The Road Between</p>
     <h2>HIGHWAY <em>1</em></h2>
-    <p>
-      The world's most spectacular coastal road connects your mountains
-      to the sea. Big Sur cliffs plunge into the Pacific.
-      Pull over constantly. You'll want to.
-    </p>
+    <p>The world's most spectacular coastal road connects your mountains to the sea. Big Sur cliffs plunge into the Pacific. Pull over constantly. You'll want to.</p>
     <div class="drive-route">
       <span class="drive-stop">Yosemite</span>
       <span class="drive-arrow">→</span>
@@ -1562,15 +619,12 @@
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════
-     CHAPTER 2 — MONTEREY
-══════════════════════════════════════ -->
+<!-- ═══════════ CHAPTER 2 — MONTEREY ═══════════ -->
 <div class="chapter-header">
   <div class="chapter-bg" style="background-image: url('https://images.unsplash.com/photo-1502780809386-9c96d0d85f62?w=1600&q=85'); background-position: center 45%;"></div>
   <div class="chapter-overlay"></div>
   <div class="chapter-text">
-    <p class="chapter-num">Chapter Two · June 6</p>
+    <p class="chapter-num">Chapter Two · June 4–5</p>
     <h2 class="chapter-title">MONTE<em>REY</em></h2>
     <p class="chapter-dates">The Pacific · Cannery Row · Carmel-by-the-Sea</p>
   </div>
@@ -1578,58 +632,55 @@
 
 <section class="days-section">
 
-  <!-- MONTEREY DAY 1 — June 6 -->
+  <!-- JUNE 4 — BIG SUR / ARRIVE MONTEREY -->
   <div class="day-card">
     <div class="day-image">
-      <div class="day-date-badge">June 6 · Friday</div>
-      <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=900&q=85" alt="Monterey Bay"/>
+      <div class="day-date-badge">June 4 · Thursday</div>
+      <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=900&q=85" alt="Big Sur coast"/>
     </div>
     <div class="day-content">
-      <p class="day-label">Arrive · Monterey Bay</p>
+      <p class="day-label">Arrive · Big Sur → Monterey Bay</p>
       <h2 class="day-title">Hello, <em>Pacific</em></h2>
       <p class="day-desc">
-        Trade your trail dust for sea salt. Monterey Bay greets you with
-        crashing waves, barking sea lions, and Cannery Row's irresistible
-        energy. Drop the bags and start exploring — you've earned it.
+        Trade your trail dust for sea salt. Drive the legendary Highway 1 through
+        Big Sur before rolling into Monterey Bay. Cannery Row and crashing waves
+        greet you. Drop the bags and start exploring.
       </p>
       <ul class="ideas-list">
-        <li>Monterey Bay Aquarium (world class — don't skip it)</li>
-        <li>Cannery Row stroll at sunset</li>
-        <li>Fisherman's Wharf for clam chowder in a bread bowl</li>
-        <li>17-Mile Drive through Pebble Beach</li>
+        <li>Bixby Bridge overlook on Highway 1</li>
+        <li>McWay Falls — waterfall straight into the ocean</li>
+        <li>Arrive Monterey · Cannery Row stroll at sunset</li>
+        <li>Fisherman's Wharf — clam chowder bread bowl</li>
       </ul>
     </div>
   </div>
 
-  <!-- MONTEREY MORE IDEAS -->
+  <!-- JUNE 5 — FULL MONTEREY DAY -->
   <div class="day-card reverse">
     <div class="day-image">
-      <div class="day-date-badge">Explore · Carmel</div>
+      <div class="day-date-badge">June 5 · Friday</div>
       <img src="https://images.unsplash.com/photo-1562510626-0e5e72e5c9e2?w=900&q=85" alt="Carmel-by-the-Sea"/>
     </div>
     <div class="day-content">
-      <p class="day-label">Day Trips · Carmel & Beyond</p>
+      <p class="day-label">Full Day · Carmel &amp; Beyond</p>
       <h2 class="day-title">Carmel-<em>by-the-Sea</em></h2>
       <p class="day-desc">
-        A storybook village just minutes from Monterey — no street addresses,
-        no Starbucks, no chain stores. Just galleries, fairy-tale cottages,
-        world-class restaurants, and a white sand beach that feels like
-        the edge of the world.
+        Your one full day on the Pacific. Start at the Aquarium, then lose
+        yourselves in Carmel's storybook streets. End with the golden light
+        along 17-Mile Drive. It's the kind of day you talk about for years.
       </p>
       <ul class="ideas-list">
+        <li>Monterey Bay Aquarium — world class, don't skip it</li>
         <li>Carmel Beach — stunning white sand</li>
-        <li>Point Lobos State Reserve — seals & otters</li>
-        <li>Bixby Bridge viewpoint on Highway 1</li>
-        <li>Wine tasting in Carmel Valley</li>
+        <li>Point Lobos State Reserve — seals &amp; sea otters</li>
+        <li>17-Mile Drive through Pebble Beach at golden hour</li>
       </ul>
     </div>
   </div>
 
 </section>
 
-<!-- ══════════════════════════════════════
-     MONTEREY HIGHLIGHTS GRID
-══════════════════════════════════════ -->
+<!-- ═══════════ MONTEREY HIGHLIGHTS GRID ═══════════ -->
 <section class="highlights">
   <div class="highlights-header">
     <p class="eyebrow">Activities · Brainstorm</p>
@@ -1638,70 +689,45 @@
   <div class="grid-3">
     <div class="grid-tile">
       <img src="https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=600&q=80" alt="Whale watching"/>
-      <div class="grid-tile-info">
-        <h3>Whale Watching</h3>
-        <p>Monterey Bay · Best in June</p>
-      </div>
+      <div class="grid-tile-info"><h3>Whale Watching</h3><p>Monterey Bay · Best in June</p></div>
     </div>
     <div class="grid-tile">
       <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&q=80" alt="Sea kayaking"/>
-      <div class="grid-tile-info">
-        <h3>Sea Kayaking</h3>
-        <p>Kelp Forests · Sea Otters</p>
-      </div>
+      <div class="grid-tile-info"><h3>Sea Kayaking</h3><p>Kelp Forests · Sea Otters</p></div>
     </div>
     <div class="grid-tile">
       <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=600&q=80" alt="Campfire"/>
-      <div class="grid-tile-info">
-        <h3>Campfire Nights</h3>
-        <p>S'mores · Stories · Stars</p>
-      </div>
+      <div class="grid-tile-info"><h3>Campfire Nights</h3><p>S'mores · Stories · Stars</p></div>
     </div>
     <div class="grid-tile">
       <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80" alt="Wildlife"/>
-      <div class="grid-tile-info">
-        <h3>Sea Otter Watch</h3>
-        <p>Moss Landing · Elkhorn Slough</p>
-      </div>
+      <div class="grid-tile-info"><h3>Sea Otter Watch</h3><p>Moss Landing · Elkhorn Slough</p></div>
     </div>
     <div class="grid-tile">
       <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80" alt="Sunset photography"/>
-      <div class="grid-tile-info">
-        <h3>Sunset Cliffs</h3>
-        <p>17-Mile Drive · Golden Hour</p>
-      </div>
+      <div class="grid-tile-info"><h3>Sunset Cliffs</h3><p>17-Mile Drive · Golden Hour</p></div>
     </div>
     <div class="grid-tile">
       <img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6?w=600&q=80" alt="Aquarium"/>
-      <div class="grid-tile-info">
-        <h3>Monterey Aquarium</h3>
-        <p>World's Best · Open Ocean Exhibit</p>
-      </div>
+      <div class="grid-tile-info"><h3>Monterey Aquarium</h3><p>World's Best · Open Ocean Exhibit</p></div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     FINAL QUOTE — COASTAL
-══════════════════════════════════════ -->
-<div class="full-bleed" style="height: 50vh;">
+<!-- ═══════════ COUSTEAU QUOTE ═══════════ -->
+<div class="full-bleed" style="height:50vh;">
   <div class="full-bleed-bg" style="background-image: url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1800&q=80'); background-position: center 50%;"></div>
   <div class="full-bleed-content">
-    <blockquote>
-      "The sea, once it casts its spell, holds one in its net of wonder forever."
-    </blockquote>
+    <blockquote>"The sea, once it casts its spell, holds one in its net of wonder forever."</blockquote>
     <cite>— Jacques Cousteau</cite>
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════
-     CTA
-══════════════════════════════════════ -->
+<!-- ═══════════ CTA ═══════════ -->
 <section class="cta">
   <div class="cta-bg"></div>
   <div class="cta-content">
-    <p class="eyebrow">May 31 – June 6 · 2025</p>
+    <p class="eyebrow">May 31 – June 6 · 2026</p>
     <h2>Let's Make it <em>Real</em></h2>
     <p>The family's excited. Now it's time to lock in the itinerary.</p>
     <div class="btn-group">
@@ -1711,75 +737,51 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     FOOTER
-══════════════════════════════════════ -->
 <footer>
   <div class="logo">California · 2026</div>
   <p>Yosemite · Highway 1 · Monterey · May 31 – June 6</p>
 </footer>
 
-
 <script>
 (function() {
-  var map = L.map('trip-map', {
-    zoomControl: true,
-    scrollWheelZoom: false,
-    dragging: true,
-    attributionControl: true
-  });
-
-  // Dark-ish tile layer (CartoDB Dark Matter)
+  var map = L.map('trip-map', { zoomControl: true, scrollWheelZoom: false });
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
-    subdomains: 'abcd',
-    maxZoom: 14
+    subdomains: 'abcd', maxZoom: 14
   }).addTo(map);
 
-  // Route coordinates
   var stops = [
-    { name: 'SFO — Land 12:10 PM',       coords: [37.621, -122.379],  icon: '✈', type: 'flight' },
-    { name: 'Yosemite Valley',             coords: [37.746, -119.594],  icon: '⛰', type: 'park' },
-    { name: 'Big Sur — Bixby Bridge',      coords: [36.373, -121.902],  icon: '🌊', type: 'drive' },
-    { name: 'Monterey',                    coords: [36.600, -121.895],  icon: '🦭', type: 'coast' },
-    { name: 'SFO — Depart 10:25 AM',       coords: [37.621, -122.379],  icon: '✈', type: 'flight' }
+    { name: 'SFO — Land 12:10 PM',        coords: [37.621, -122.379] },
+    { name: 'Oakhurst — Grocery Stop',    coords: [37.332, -119.649] },
+    { name: 'Yosemite Forks — Home Base', coords: [37.473, -119.624] },
+    { name: 'Yosemite Valley',            coords: [37.746, -119.594] },
+    { name: 'Big Sur — Bixby Bridge',     coords: [36.373, -121.902] },
+    { name: 'Monterey',                   coords: [36.600, -121.895] },
+    { name: 'SFO — Depart 10:25 AM',      coords: [37.621, -122.379] }
   ];
 
-  // Draw the route polyline
-  var routeCoords = stops.map(function(s) { return s.coords; });
-  L.polyline(routeCoords, {
-    color: '#f5c842',
-    weight: 2.5,
-    opacity: 0.8,
-    dashArray: '8, 8'
+  L.polyline(stops.map(function(s){ return s.coords; }), {
+    color: '#f5c842', weight: 2.5, opacity: 0.8, dashArray: '8, 8'
   }).addTo(map);
 
-  // Custom gold marker icon factory
   function makeIcon(label) {
     return L.divIcon({
       className: '',
-      html: '<div style="background:#f5c842;color:#0a0a0a;font-size:11px;font-weight:700;padding:5px 10px;white-space:nowrap;border-radius:2px;box-shadow:0 2px 8px rgba(0,0,0,0.5);letter-spacing:1px;text-transform:uppercase;">' + label + '</div>',
+      html: '<div style="background:#f5c842;color:#0a0a0a;font-size:10px;font-weight:700;padding:5px 9px;white-space:nowrap;border-radius:2px;box-shadow:0 2px 8px rgba(0,0,0,0.6);letter-spacing:1px;">' + label + '</div>',
       iconAnchor: [0, 10]
     });
   }
 
-  // Drop markers (skip duplicate SFO at end)
   var shown = {};
-  stops.forEach(function(stop, i) {
+  stops.forEach(function(stop) {
     var key = stop.coords[0].toFixed(2) + ',' + stop.coords[1].toFixed(2);
     if (shown[key]) return;
     shown[key] = true;
-    L.marker(stop.coords, { icon: makeIcon(stop.icon + ' ' + stop.name) })
-      .addTo(map)
-      .bindPopup('<b style="color:#f5c842">' + stop.name + '</b>', { className: 'dark-popup' });
+    L.marker(stop.coords, { icon: makeIcon(stop.name) }).addTo(map);
   });
 
-  // Fit map to all points
-  map.fitBounds(L.latLngBounds(stops.map(function(s) { return s.coords; })), {
-    padding: [40, 60]
-  });
+  map.fitBounds(L.latLngBounds(stops.map(function(s){ return s.coords; })), { padding: [40, 60] });
 })();
 </script>
-
 </body>
 </html>
