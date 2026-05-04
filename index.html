@@ -90,6 +90,58 @@
     .tl-badge.grey { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
     .tl-badge.red { background: rgba(245,100,50,0.08); border: 1px solid rgba(245,100,50,0.25); color: #f57832; }
 
+    /* ── YOSEMITE DAY PLANNER ── */
+    .yosemite-planner { background: #0d0d0d; padding: 60px 0; border-top: 1px solid #1e1e1e; }
+    .planner-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .planner-heading { text-align: center; margin-bottom: 48px; }
+    .planner-heading .eyebrow { font-size: 10px; letter-spacing: 6px; text-transform: uppercase; color: #f5c842; margin-bottom: 14px; }
+    .planner-heading h2 { font-family: 'Playfair Display', serif; font-size: clamp(30px, 4vw, 50px); font-weight: 700; }
+    .planner-heading h2 em { font-style: italic; color: #f5c842; }
+    
+    .day-planner { background: #1a1a1a; border: 1px solid #2a2a2a; margin-bottom: 40px; overflow: hidden; }
+    .day-planner-header { background: linear-gradient(90deg, #f5c842 0%, #f5a623 100%); color: #0a0a0a; padding: 20px 30px; }
+    .day-planner-header h3 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; margin-bottom: 4px; }
+    .day-planner-header p { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+    
+    .day-planner-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .day-timeline { padding: 30px; border-right: 1px solid #2a2a2a; }
+    .day-map-container { position: relative; min-height: 500px; }
+    #yosemite-day1-map, #yosemite-day2-map { height: 100%; width: 100%; }
+    
+    .timeline-entry { display: grid; grid-template-columns: 80px 1fr; gap: 20px; margin-bottom: 24px; position: relative; }
+    .timeline-entry:not(:last-child)::after { content: ''; position: absolute; left: 40px; top: 38px; bottom: -24px; width: 1px; background: #2a2a2a; }
+    .timeline-time { text-align: center; }
+    .timeline-time .time { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: #f5c842; }
+    .timeline-time .duration { font-size: 9px; letter-spacing: 1px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+    .timeline-activity { padding-top: 2px; }
+    .timeline-activity h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .timeline-activity p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+    .timeline-activity .walk-info { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; padding: 4px 10px; background: rgba(245,200,66,0.08); border: 1px solid rgba(245,200,66,0.2); border-radius: 3px; font-size: 10px; font-weight: 600; color: #f5c842; }
+    .timeline-activity .walk-info.easy { background: rgba(76,175,80,0.08); border-color: rgba(76,175,80,0.3); color: #4CAF50; }
+    .timeline-activity .walk-info.moderate { background: rgba(255,152,0,0.08); border-color: rgba(255,152,0,0.3); color: #FF9800; }
+    .timeline-activity .walk-info.strenuous { background: rgba(244,67,54,0.08); border-color: rgba(244,67,54,0.3); color: #F44336; }
+    
+    .map-legend { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.85); padding: 12px 16px; border-radius: 4px; z-index: 1000; }
+    .map-legend h5 { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; color: #f5c842; }
+    .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: 10px; color: rgba(255,255,255,0.7); }
+    .legend-icon { width: 12px; height: 12px; border-radius: 50%; }
+    .legend-icon.start { background: #4CAF50; }
+    .legend-icon.activity { background: #f5c842; }
+    .legend-icon.food { background: #FF9800; }
+    .legend-icon.scenic { background: #9C27B0; }
+    .legend-line { width: 20px; height: 2px; background: #2196F3; }
+    
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #2a2a2a; margin-top: 1px; }
+    .stat-box { background: #1a1a1a; padding: 20px; text-align: center; }
+    .stat-value { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: #f5c842; }
+    .stat-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 4px; }
+    
+    @media (max-width: 900px) {
+      .day-planner-body { grid-template-columns: 1fr; }
+      .day-timeline { border-right: none; border-bottom: 1px solid #2a2a2a; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+    }
+
     /* ── GROCERY SECTION ── */
     .grocery-section { background: #0d0d0d; padding: 80px 0; border-top: 1px solid #1e1e1e; }
     .grocery-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
@@ -356,8 +408,8 @@
         <div class="timeline-date-col"><span class="tl-date">June 1</span><span class="tl-day">Monday</span></div>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
-          <div class="tl-title"><em>Full Day 1</em> — Waterfalls + Golden Hour</div>
-          <div class="tl-details">Lower Yosemite Fall · Vernal Fall footbridge · Mirror Lake loop (stroller-friendly) · Happy Isles · ★ Panorama Point at golden hour</div>
+          <div class="tl-title"><em>Day 1</em> — Valley Orientation</div>
+          <div class="tl-details">8 AM Tunnel View · 9 AM Welcome Center · Lower Yosemite Falls · Mist Trail to Vernal Fall footbridge (expect to get SOAKED) · Curry Village afternoon</div>
         </div>
       </div>
 
@@ -365,8 +417,8 @@
         <div class="timeline-date-col"><span class="tl-date">June 2</span><span class="tl-day">Tuesday</span></div>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
-          <div class="tl-title"><em>Full Day 2</em> — Giants &amp; Big Views (All Ages)</div>
-          <div class="tl-details">Mariposa Grove (15 min from base) · Grizzly Giant · California Tunnel Tree · Glacier Point drive-up · Valley bike loop · Cook's Meadow stroll</div>
+          <div class="tl-title"><em>Day 2</em> — Split Day Adventures</div>
+          <div class="tl-details">8 AM Glacier Point Trail · Curry Village bikes · 2 PM Mariposa Grove shuttle · Big Trees Loop or Grizzly Giant Loop · Junior Ranger badges</div>
         </div>
       </div>
 
@@ -522,29 +574,250 @@
     </div>
   </div>
 
+<!-- ═══════════ YOSEMITE DAY PLANNER ═══════════ -->
+<section class="yosemite-planner">
+  <div class="planner-inner">
+    <div class="planner-heading">
+      <p class="eyebrow">Visual Itinerary · Park Navigation</p>
+      <h2>Your Yosemite <em>Day-by-Day</em></h2>
+    </div>
+
+    <!-- DAY 1 PLANNER -->
+    <div class="day-planner">
+      <div class="day-planner-header">
+        <h3>Day 1 · Monday, June 1</h3>
+        <p>Valley Floor Exploration · Total Walking: ~4 miles</p>
+      </div>
+      <div class="day-planner-body">
+        <div class="day-timeline">
+          <div class="timeline-entry">
+            <div class="timeline-time">
+              <div class="time">8:00 AM</div>
+              <div class="duration">30 min</div>
+            </div>
+            <div class="timeline-activity">
+              <h4>Tunnel View</h4>
+              <p>Start with the iconic valley overlook. Arrive early for parking. Perfect family photo op.</p>
+              <span class="walk-info easy">🚶 5 min walk from parking</span>
+            </div>
+          </div>
+          
+          <div class="timeline-entry">
+            <div class="timeline-time">
+              <div class="time">9:00 AM</div>
+              <div class="duration">45 min</div>
+            </div>
+            <div class="timeline-activity">
+              <h4>Valley Welcome Center</h4>
+              <p>Get Junior Ranger booklets, maps, and shuttle info. Park here and use the free shuttle system.</p>
+              <span class="walk-info easy">🚶 Minimal walking</span>
+            </div>
+          </div>
+          
+          <div class="timeline-entry">
+            <div class="timeline-time">
+              <div class="time">9:45 AM</div>
+              <div class="duration">1 hr</div>
+            </div>
+            <div class="timeline-activity">
+              <h4>Lower Yosemite Falls</h4>
+              <p>Easy loop trail, mostly paved. In June the falls are thundering — expect mist on the bridge!</p>
+              <span class="walk-info easy">🚶 1.0 mile loop · Easy · Paved</span>
+            </div>
+          </div>
+          
+          <div class="timeline-entry">
+            <div class="timeline-time">
+              <div class="time">11:00 AM</div>
+              <div class="duration">1 hr</div>
+            </div>
+            <div class="timeline-activity">
+              <h4>Picnic Lunch</h4>
+              <p>Designated picnic area near the visitor center. Great views while you eat.</p>
+              <span class="walk-info easy">🍽️ Rest & refuel</span>
+            </div>
+          </div>
+          
+          <div class="timeline-entry">
+            <div class="timeline-time">
+              <div class="time">12:30 PM</div>
+              <div class="duration">2 hrs</div>
+            </div>
+            <div class="timeline-activity">
+              <h4>Mist Trail to Vernal Fall Footbridge</h4>
+              <p>The trail is SOAKED in June — wear rain shells! Footbridge is a good turnaround point.</p>
+              <span class="walk-info moderate">🚶 1.6 miles RT · Moderate · 400ft gain</span>
+            </div>
+          </div>
+          
+          <div class="timeline-entry">
+            <div class="timeline-time">
+              <div class="time">3:00 PM</div>
+              <div class="duration">1 hr</div>
+            </div>
+            <div class="timeline-activity">
+              <h4>Curry Village</h4>
+              <p>Ice cream, pizza, and tacos. Well-deserved treats after the hike!</p>
+              <span class="walk-info easy">🍦 Snack break</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="day-map-container">
+          <div id="yosemite-day1-map"></div>
+          <div class="map-legend">
+            <h5>Map Key</h5>
+            <div class="legend-item"><span class="legend-icon start"></span> Starting point</div>
+            <div class="legend-item"><span class="legend-icon activity"></span> Activity stop</div>
+            <div class="legend-item"><span class="legend-icon food"></span> Food/Rest</div>
+            <div class="legend-item"><span class="legend-line"></span> Walking route</div>
+          </div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-value">~4 mi</div>
+          <div class="stat-label">Total Walking</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">Easy</div>
+          <div class="stat-label">Difficulty</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">6-7 hrs</div>
+          <div class="stat-label">Total Time</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">All Ages</div>
+          <div class="stat-label">Suitable For</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 2 PLANNER -->
+    <div class="day-planner">
+      <div class="day-planner-header">
+        <h3>Day 2 · Tuesday, June 2</h3>
+        <p>Giants & Views · Flexible Options · Total Walking: 2-5 miles</p>
+      </div>
+      <div class="day-planner-body">
+        <div class="day-timeline">
+          <div class="timeline-entry">
+            <div class="timeline-time">
+              <div class="time">8:00 AM</div>
+              <div class="duration">2 hrs</div>
+            </div>
+            <div class="timeline-activity">
+              <h4>Glacier Point Road</h4>
+              <p>Drive up for spectacular views. Multiple viewpoints along the way. Washburn Point and Glacier Point are must-sees.</p>
+              <span class="walk-info easy">🚗 Drive + short walks to viewpoints</span>
+            </div>
+          </div>
+          
+          <div class="timeline-entry">
+            <div class="timeline-time">
+              <div class="time">10:00 AM</div>
+              <div class="duration">30 min</div>
+            </div>
+            <div class="timeline-activity">
+              <h4>Curry Village Break</h4>
+              <p>Coffee and snacks. Bike rental station if you want to explore the valley floor on wheels.</p>
+              <span class="walk-info easy">☕ Rest stop</span>
+            </div>
+          </div>
+          
+          <div class="timeline-entry">
+            <div class="timeline-time">
+              <div class="time">10:30 AM</div>
+              <div class="duration">2 hrs</div>
+            </div>
+            <div class="timeline-activity">
+              <h4>Valley Floor Activities (Choose Your Adventure)</h4>
+              <p>Option A: Rent bikes for valley loop. Option B: Mirror Lake walk. Option C: Relax at Swinging Bridge.</p>
+              <span class="walk-info easy">🚴 Biking or 🚶 1-3 miles walking</span>
+            </div>
+          </div>
+          
+          <div class="timeline-entry">
+            <div class="timeline-time">
+              <div class="time">1:00 PM</div>
+              <div class="duration">1 hr</div>
+            </div>
+            <div class="timeline-activity">
+              <h4>Lunch & Junior Ranger</h4>
+              <p>Complete Junior Ranger badges. Kids can turn them in at the visitor center for their official badge!</p>
+              <span class="walk-info easy">🏆 Badge ceremony!</span>
+            </div>
+          </div>
+          
+          <div class="timeline-entry">
+            <div class="timeline-time">
+              <div class="time">2:00 PM</div>
+              <div class="duration">2.5 hrs</div>
+            </div>
+            <div class="timeline-activity">
+              <h4>Mariposa Grove of Giant Sequoias</h4>
+              <p>Take shuttle from Welcome Plaza. Choose Big Trees Loop (0.3 mi, flat) or Grizzly Giant Loop (2 mi).</p>
+              <span class="walk-info moderate">🌲 0.3-2 miles · Easy to Moderate</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="day-map-container">
+          <div id="yosemite-day2-map"></div>
+          <div class="map-legend">
+            <h5>Map Key</h5>
+            <div class="legend-item"><span class="legend-icon start"></span> Morning start</div>
+            <div class="legend-item"><span class="legend-icon activity"></span> Activity stop</div>
+            <div class="legend-item"><span class="legend-icon scenic"></span> Scenic viewpoint</div>
+            <div class="legend-item"><span class="legend-line"></span> Drive route</div>
+          </div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-value">2-5 mi</div>
+          <div class="stat-label">Flexible Walking</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">Variable</div>
+          <div class="stat-label">Choose Difficulty</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">~8 hrs</div>
+          <div class="stat-label">Full Day</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">All Ages</div>
+          <div class="stat-label">Family Friendly</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
   <!-- JUNE 1 — FULL DAY 1 -->
   <div class="day-card reverse">
     <div class="day-image">
       <div class="day-date-badge">June 1 · Monday · Full Park Day</div>
-      <img src="https://images.unsplash.com/photo-1615243029542-4fcced32f2e0?w=900&q=85" alt="Yosemite Falls"/>
+      <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=900&q=85" alt="Yosemite Falls"/>
     </div>
     <div class="day-content">
-      <p class="day-label">Full Day 1 · Waterfalls · Early Valley Exit · Golden Hour</p>
-      <h2 class="day-title">The <em>Waterfall</em> Tour</h2>
+      <p class="day-label">Day 1 · Valley Orientation — Everyone Together</p>
+      <h2 class="day-title">Valley Floor <em>Highlights</em></h2>
       <p class="day-desc">
-        Morning and afternoon on the valley floor — then exit the main valley by 5 PM.
-        Glacier Point Road is on your way back toward Yosemite Forks, and Panorama Point
-        is waiting at the top. The light over Half Dome and the valley at golden hour
-        (~7:30 PM) is something you won't find words for.
+        Start early at Tunnel View for the iconic shot, then spend the day exploring the valley floor's
+        most accessible wonders. June waterfalls are at their thundering peak — expect to get misted!
+        End with a scenic drive or bike loop.
       </p>
       <ul class="ideas-list">
-        <li>Depart Yosemite Forks 8 AM · Enter via South Entrance</li>
-        <li>Lower Yosemite Fall trail — easy, flat, all ages</li>
-        <li>Vernal Fall footbridge — go as far as the group wants <a href="https://www.alltrails.com/trail/us/california/vernal-falls" target="_blank" style="color:#f5c842;font-size:11px;letter-spacing:1px;text-decoration:none;border-bottom:1px solid rgba(245,200,66,0.4);margin-left:6px;">AllTrails ↗</a></li>
-        <li>Mirror Lake loop — stroller-friendly, Half Dome reflection</li>
-        <li>Happy Isles Nature Center for the little ones</li>
-        <li>⚡ Exit valley by 5 PM — take Glacier Point Rd up</li>
-        <li>★ Panorama Point golden hour (~7:30 PM) — the day's finale</li>
+        <li>8:00 AM · Tunnel View — arrive early for parking, iconic valley shot</li>
+        <li>9:00 AM · Valley Welcome Center — Junior Ranger booklets, maps, shuttle info</li>
+        <li>9:45 AM · Lower Yosemite Falls — easy 1-mile loop, expect mist on bridge</li>
+        <li>11:00 AM · Picnic lunch at designated area</li>
+        <li>12:30 PM · Mist Trail to Vernal Fall footbridge (1.6 mi RT) — SOAKED in June!</li>
+        <li>3:00 PM · Curry Village — ice cream, pizza, tacos break</li>
+        <li>Late afternoon · Scenic drive back to Yosemite Forks</li>
       </ul>
     </div>
   </div>
@@ -556,21 +829,21 @@
       <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=900&q=85" alt="Giant Sequoias Mariposa Grove"/>
     </div>
     <div class="day-content">
-      <p class="day-label">Full Day 2 · Giants, Views &amp; Easy Wins · All Ages</p>
-      <h2 class="day-title">Big Trees, <em>Big Views</em></h2>
+      <p class="day-label">Day 2 · Split Options — Choose Your Adventure</p>
+      <h2 class="day-title">Giants &amp; <em>Views</em></h2>
       <p class="day-desc">
-        The perfect family day — no big hikes required. Mariposa Grove is just
-        15 minutes from your door and completely blows kids' minds (and adults').
-        Glacier Point is a short drive for the most dramatic view in the park.
-        Valley floor biking rounds out the afternoon for whoever has energy left.
+        Start with Glacier Point Trail, then split based on energy levels. Option for more hiking
+        or a relaxed afternoon with bike rentals and easier activities. Mariposa Grove in the
+        afternoon offers giant sequoias just 15 minutes from your base.
       </p>
       <ul class="ideas-list">
-        <li>Mariposa Grove — 15 min from base, go early before crowds</li>
-        <li>Grizzly Giant + California Tunnel Tree — kids walk through a tree</li>
-        <li>Glacier Point — drive up, 5 min walk, jaw-dropping panorama</li>
-        <li>Valley floor loop by bike — rentals available, great for ages 4+</li>
-        <li>Cook's Meadow stroll — flat, paved, stroller-friendly, deer everywhere</li>
-        <li>Curry Village pool (seasonal) — best reward for tired little legs</li>
+        <li>8:00 AM · Glacier Point Trail — start early for cooler temps</li>
+        <li>10:00 AM · Curry Village — snacks, coffee break</li>
+        <li>Late morning · Bike rentals at Curry Village for valley exploration</li>
+        <li>1:00 PM · Lunch and finish Junior Ranger badges</li>
+        <li>2:00 PM · Mariposa Grove — free shuttle from Welcome Plaza</li>
+        <li>Big Trees Loop (0.3 mi flat) or Grizzly Giant Loop (2 mi) options</li>
+        <li>Return to base for evening relaxation</li>
       </ul>
     </div>
   </div>
@@ -757,6 +1030,138 @@
 </footer>
 
 <script>
+// Yosemite Day 1 Map
+(function() {
+  var day1Map = L.map('yosemite-day1-map', { 
+    zoomControl: true, 
+    scrollWheelZoom: false,
+    center: [37.7456, -119.5936],
+    zoom: 13
+  });
+  
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    maxZoom: 16
+  }).addTo(day1Map);
+  
+  // Day 1 Locations
+  var day1Stops = [
+    { name: '1. Tunnel View', coords: [37.7156, -119.6777], type: 'start', time: '8:00 AM' },
+    { name: '2. Valley Visitor Center', coords: [37.7486, -119.5872], type: 'activity', time: '9:00 AM' },
+    { name: '3. Lower Yosemite Falls', coords: [37.7459, -119.5967], type: 'activity', time: '9:45 AM' },
+    { name: '4. Picnic Area', coords: [37.7468, -119.5880], type: 'food', time: '11:00 AM' },
+    { name: '5. Mist Trail Start', coords: [37.7324, -119.5587], type: 'activity', time: '12:30 PM' },
+    { name: '6. Curry Village', coords: [37.7377, -119.5741], type: 'food', time: '3:00 PM' }
+  ];
+  
+  // Create custom icons
+  function createIcon(color) {
+    return L.divIcon({
+      className: 'custom-marker',
+      html: '<div style="background:' + color + ';width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,0.3);"></div>',
+      iconSize: [16, 16],
+      iconAnchor: [8, 8]
+    });
+  }
+  
+  var iconColors = {
+    start: '#4CAF50',
+    activity: '#f5c842',
+    food: '#FF9800',
+    scenic: '#9C27B0'
+  };
+  
+  // Add markers with popups
+  day1Stops.forEach(function(stop) {
+    L.marker(stop.coords, { icon: createIcon(iconColors[stop.type]) })
+      .bindPopup('<b>' + stop.name + '</b><br>' + stop.time)
+      .addTo(day1Map);
+  });
+  
+  // Draw walking routes
+  var walkingRoute = [
+    [37.7156, -119.6777], // Tunnel View
+    [37.7486, -119.5872], // Visitor Center
+    [37.7459, -119.5967], // Lower Falls
+    [37.7468, -119.5880], // Picnic
+    [37.7324, -119.5587], // Mist Trail
+    [37.7377, -119.5741]  // Curry Village
+  ];
+  
+  L.polyline(walkingRoute, {
+    color: '#2196F3',
+    weight: 3,
+    opacity: 0.6,
+    dashArray: '10, 5'
+  }).addTo(day1Map);
+})();
+
+// Yosemite Day 2 Map
+(function() {
+  var day2Map = L.map('yosemite-day2-map', { 
+    zoomControl: true, 
+    scrollWheelZoom: false,
+    center: [37.6800, -119.5500],
+    zoom: 11
+  });
+  
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    maxZoom: 16
+  }).addTo(day2Map);
+  
+  // Day 2 Locations
+  var day2Stops = [
+    { name: '1. Glacier Point', coords: [37.7276, -119.5735], type: 'scenic', time: '8:00 AM' },
+    { name: '2. Washburn Point', coords: [37.7355, -119.5729], type: 'scenic', time: '8:30 AM' },
+    { name: '3. Curry Village', coords: [37.7377, -119.5741], type: 'food', time: '10:00 AM' },
+    { name: '4. Valley Floor/Bikes', coords: [37.7456, -119.5936], type: 'activity', time: '10:30 AM' },
+    { name: '5. Visitor Center', coords: [37.7486, -119.5872], type: 'activity', time: '1:00 PM' },
+    { name: '6. Mariposa Grove', coords: [37.5027, -119.6065], type: 'activity', time: '2:00 PM' }
+  ];
+  
+  // Create custom icons
+  function createIcon(color) {
+    return L.divIcon({
+      className: 'custom-marker',
+      html: '<div style="background:' + color + ';width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,0.3);"></div>',
+      iconSize: [16, 16],
+      iconAnchor: [8, 8]
+    });
+  }
+  
+  var iconColors = {
+    start: '#4CAF50',
+    activity: '#f5c842',
+    food: '#FF9800',
+    scenic: '#9C27B0'
+  };
+  
+  // Add markers
+  day2Stops.forEach(function(stop) {
+    L.marker(stop.coords, { icon: createIcon(iconColors[stop.type]) })
+      .bindPopup('<b>' + stop.name + '</b><br>' + stop.time)
+      .addTo(day2Map);
+  });
+  
+  // Draw drive route to Glacier Point and back
+  var driveRoute = [
+    [37.7377, -119.5741], // Start Curry Village
+    [37.7355, -119.5729], // Washburn Point
+    [37.7276, -119.5735], // Glacier Point
+    [37.7377, -119.5741], // Back to Curry Village
+    [37.5027, -119.6065]  // Mariposa Grove
+  ];
+  
+  L.polyline(driveRoute, {
+    color: '#2196F3',
+    weight: 3,
+    opacity: 0.6,
+    dashArray: '10, 5'
+  }).addTo(day2Map);
+})();
+
+// Main trip map
 (function() {
   var map = L.map('trip-map', { zoomControl: true, scrollWheelZoom: false });
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
